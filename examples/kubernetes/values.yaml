@@ -2,7 +2,7 @@
 additionalArguments:
   - "--pilot.token=XXXXX_YOURTOKEN_XXXXXXXXXXXXXXXX"
   - "--experimental.plugins.traefik-ondemand-plugin.modulename=github.com/acouvreur/traefik-ondemand-plugin"
-  - "--experimental.plugins.traefik-ondemand-plugin.version=v1.0.1"
+  - "--experimental.plugins.traefik-ondemand-plugin.version=v1.2.0"
   - "--providers.kubernetesingress.allowEmptyServices=true"
 
 experimental:
