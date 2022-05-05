@@ -15,8 +15,9 @@
 8. `helm install traefik traefik/traefik -f values.yaml  --namespace kube-system   `
 9.  `kubectl apply -f deploy-whoami.yml`
 10.  `kubectl apply -f manifests.yml`
-11.  Browse to http://localhost/ 
-12. `kubectl get deployments -o wide`
+11.  `kubectl scale deploy whoami --replicas=0`
+12.  Browse to http://localhost/ 
+13. `kubectl get deployments -o wide`
 ```
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES              SELECTOR
 whoami   1/1     1            1           16m   whoami       containous/whoami   app=whoami
