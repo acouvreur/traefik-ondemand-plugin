@@ -36,6 +36,7 @@ func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
 			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, displayName, err.Error())))
+			return
 		}
 
 		if status == "started" {
@@ -47,6 +48,7 @@ func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 			// Error
 			rw.WriteHeader(http.StatusInternalServerError)
 			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, displayName, status)))
+			return
 		}
 	}
 	if notReadyCount == 0 {
