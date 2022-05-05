@@ -18,6 +18,7 @@ type Config struct {
 	ErrorPage   string   `yaml:"errorpage"`
 	LoadingPage string   `yaml:"loadingpage"`
 	WaitUi      bool     `yaml:"waitui"`
+	DisplayName string   `yaml:"displayname"`
 	BlockDelay  string   `yaml:"blockdelay"`
 }
 
@@ -27,6 +28,7 @@ func CreateConfig() *Config {
 		Timeout:     "1m",
 		WaitUi:      true,
 		BlockDelay:  "1m",
+		DisplayName: "",
 		ErrorPage:   "",
 		LoadingPage: "",
 	}
@@ -95,6 +97,7 @@ func (config *Config) getServeStrategy(requests []string, name string, next http
 			Name:        name,
 			Next:        next,
 			Timeout:     timeout,
+			DisplayName: config.DisplayName,
 			ErrorPage:   config.ErrorPage,
 			LoadingPage: config.LoadingPage,
 		}, nil

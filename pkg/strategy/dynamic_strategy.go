@@ -13,6 +13,7 @@ type DynamicStrategy struct {
 	Name        string
 	Next        http.Handler
 	Timeout     time.Duration
+	DisplayName string
 	LoadingPage string
 	ErrorPage   string
 }
@@ -20,6 +21,12 @@ type DynamicStrategy struct {
 // ServeHTTP retrieve the service status
 func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	started := make([]bool, len(e.Requests))
+
+	displayName := e.Name
+	if len(e.DisplayName) > 0 {
+		displayName = e.DisplayName
+	}
+
 	notReadyCount := 0
 	for requestIndex, request := range e.Requests {
 		log.Printf("Sending request: %s", request)
@@ -28,7 +35,7 @@ func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 		if err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
-			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, e.Name, err.Error())))
+			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, displayName, err.Error())))
 		}
 
 		if status == "started" {
@@ -39,7 +46,7 @@ func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		} else {
 			// Error
 			rw.WriteHeader(http.StatusInternalServerError)
-			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, e.Name, status)))
+			rw.Write([]byte(pages.GetErrorPage(e.ErrorPage, displayName, status)))
 		}
 	}
 	if notReadyCount == 0 {
@@ -48,6 +55,6 @@ func (e *DynamicStrategy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	} else {
 		// Services still starting, notify client
 		rw.WriteHeader(http.StatusAccepted)
-		rw.Write([]byte(pages.GetLoadingPage(e.LoadingPage, e.Name, e.Timeout)))
+		rw.Write([]byte(pages.GetLoadingPage(e.LoadingPage, displayName, e.Timeout)))
 	}
 }
