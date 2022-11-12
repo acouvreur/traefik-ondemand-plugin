@@ -1,5 +1,7 @@
 # Traefik Ondemand Plugin
 
+**Project achieved, please see [acouvreur/sablier](https://github.com/acouvreur/sablier)**
+
 Traefik middleware to start containers on demand.
 
 ![Github Actions](https://img.shields.io/github/workflow/status/acouvreur/traefik-ondemand-plugin/Build?style=flat-square)
